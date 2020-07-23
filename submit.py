@@ -37,9 +37,9 @@ with open("last_get.html","w") as fd:
 #读取网页记录
 predef = json.loads(re.search('"info":({.*}),"ontime"',result.text).group(1))
 
-if "dump_geo" in sys.argv:
-    print(predef['geo_api_info'])
-    exit()
+# if "dump_geo" in sys.argv:
+#     print(predef['geo_api_info'])
+#     exit()
 
 try:
     del predef['jrdqtlqk']
