@@ -1,8 +1,7 @@
 # xidian-ncov-xidiandailyup  
 ## WINDOWS  
 1.安装`python3.8*`  
-`pip install requests`  
-`pip install time`  
+`pip install requests`   
 2.执行`configure.py`  
 定位输入  
 南校区：  
