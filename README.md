@@ -29,11 +29,12 @@
 北校区：  
 `{"type":"complete","info":"SUCCESS","status":1,"VDa":"jsonp_980898_","position":{"Q":34.23254,"R":108.91514000000001,"lng":108.91514,"lat":34.23254},"message":"Get ipLocation success.Get address success.","location_type":"ip","accuracy":null,"isConverted":true,"addressComponent":{"citycode":"029","adcode":"610113","businessAreas":[],"neighborhoodType":"","neighborhood":"","building":"","buildingType":"","street":"白沙路","streetNumber":"付8号","country":"中国","province":"陕西省","city":"西安市","district":"雁塔区","township":"电子城街道"},"formattedAddress":"陕西省西安市雁塔区电子城街道西安电子科技大学北校区","roads":[],"crosses":[],"pois":[]}`  
 3.设置`crontab`  
+`10 6,12,18 * * * /root/xidian-ncov-xidiandailyup/submit.py  >> /dev/null  2>&1 &`
 
 ## TODO
 * ~~优化获取定位的代码~~  
 * ~~晨午检~~
-* 反馈代码
+* ~~反馈代码~~
 * 学习使用`github`
 ## 写在最后
 我其实只是个不会写代码的萌新，参考[大佬的代码](https://github.com/Apache553/xidian-ncov-report)，再学习了一点点`python`，才把教程写出来了。
