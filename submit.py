@@ -1,12 +1,60 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
-
 import json
 import requests
 import re
 import sys
 import os
 import time
+
+
+def time_judge():
+    t = int(time.strftime("%H", time.localtime()))
+    if t < 8:
+        return "凌晨\n"
+    elif t < 12:
+        return "早上\n"
+    elif t < 14:
+        return "中午\n"
+    elif t < 18:
+        return "下午\n"
+    elif t < 24:
+        return "晚上\n"
+    else:
+        print("输入错误")
+        exit(1)
+
+
+def notice_func(input):
+    input = json.loads(input.text)
+    text = time.strftime("时间：\n%Y-%m-%d %X\n", time.localtime()) + input['m']
+
+    if not os.path.exists(currentdir + "/notice.json"):
+        exit(0)
+    with open(currentdir + "/notice.json", "r") as fd:
+        data1 = json.load(fd)
+
+    if data1['server_chan'] == 1:
+        url = "https://sc.ftqq.com/" +\
+             data1['key_server'] + \
+                 ".send"
+        data = {'text':'晨午晚检填报报告：' + time_judge(), 'desp':text}
+        output = conn.post(url, data = data)
+
+
+    if data1['telegram_bot'] == 1:
+        url = "https://api.telegram.org/bot" + \
+            data1['key_bot'] + \
+                "/sendMessage"
+        data = {'chat_id':data1['chat_id'], 'text':"晨午晚检填报报告：\n" + time_judge() + text}
+        # 读取代理设置
+        if  os.path.exists(currentdir + "/proxies.json"):
+            with open(currentdir + "/proxies.json", "r") as fd:
+                proxies = json.load(fd)        
+            output1 = conn.post(url, data = data, proxies = proxies)
+        else:
+            output1 = conn.post(url, data = data)
+
 
 # output log
 def print_output_log():
@@ -24,7 +72,7 @@ if os.path.exists("NOSUBMIT"):
 data = {}
 
 currentdir = os.path.dirname(os.path.abspath(__file__))
-with open(currentdir + "\\data.json") as fd:
+with open(currentdir + "/data.json") as fd:
     data=json.load(fd)
     
 conn = requests.Session()
@@ -41,13 +89,10 @@ if result.status_code != 200:
     print('获取页面大失败')
     exit()
 
-# print("打印正则调试：\n%s" % re.search('"info":({.*}),"ontime"',result.text).group(1))
-# print("打印输入：\n" + str(data))
 
 
 #读取网页记录
 predef = json.loads(re.search('"info":({.*}),"ontime"',result.text).group(1))
-# print("打印上次提交记录：\n"+ str(predef))
 
 
 if "dump_geo" in sys.argv:
@@ -67,17 +112,12 @@ del predef['uid']
 del predef['creator']
 del predef['created']
 del predef['id']
-predef.update(data)
 
-#最终测试
-# while True:
-#     select = input("真的要提交吗？\n请输入YES\\NO\n")
-#     if select == "YES":
-#         break
-#     elif select == "NO":
-#         exit()
+predef.update(data)
 
 result = conn.post('https://xxcapp.xidian.edu.cn/xisuncov/wap/open-report/save',data=predef)
 
+
 print_output_log()
+notice_func(result)
 time.sleep(10)
