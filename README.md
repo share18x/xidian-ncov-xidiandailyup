@@ -19,9 +19,7 @@
 1.安装`python3.8*`  
 `pip install  requests`   
 `pip install -U requests[socks]`  
-2.执行`configure.py`  
-3.设置`crontab`  
-`10 6,12,18 * * * /root/xidian-ncov-xidiandailyup/submit.py > /dev/null  2>&1 &`
+2.赋予权限并执行`start.sh`  
 
 ## 功能  
 - [x] 隐藏密码输入  
