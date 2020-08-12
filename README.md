@@ -1,7 +1,6 @@
 # xidian-ncov-xidiandailyup  
 ## WINDOWS  
-1.安装`python3.8*`  
-`pip install  requests`   
+1.安装`python3.8*`     
 `pip install -U requests[socks]`  
 2.执行`configure.py`  
 3.打开`submit.py`测试  
