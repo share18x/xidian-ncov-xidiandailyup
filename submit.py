@@ -61,7 +61,7 @@ def print_output_log():
     print("正在记录日志中......\n")
     output_str = "最终输出：\n"
     output_str += str(predef) + "\n"
-    output_str += result.text + "\n"
+    output_str += result.json()["m"] + "\n"
     output_str += time.strftime("%Y-%m-%d %H:%M:%S\n", time.localtime())
     with open(currentdir + "/output.log", "a") as fd:
         fd.write(output_str)
@@ -92,12 +92,10 @@ if result.status_code != 200:
 
 
 #读取网页记录
-predef = json.loads(re.search('"info":({.*}),"ontime"',result.text).group(1))
+predef = result.json()
+predef = predef["d"]["info"]
 
 
-if "dump_geo" in sys.argv:
-    print(predef['geo_api_info'])
-    exit()
 
 try:
     del predef['jrdqtlqk']
