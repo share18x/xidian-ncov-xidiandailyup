@@ -26,3 +26,4 @@
 - [x] 推送服务 [Server酱](http://sc.ftqq.com/3.version)  
 - [x] 推送服务 [telegram_bot](https://t.me/BotFather)  
 - [x] 读写代理文件  
+- [x] 邮件提醒服务
